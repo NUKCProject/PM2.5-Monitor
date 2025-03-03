@@ -1,0 +1,7 @@
+runtime: nodejs22
+
+handlers:
+  - url: /pm25
+    script: auto
+  - url: /.*
+    static_dir: public
