@@ -27,10 +27,7 @@ let latestPM = {
   particles_10: 0
 };
 
-app.get('/', (req, res) => {
-  res.send("PM2.5-Monitor");
-});
-
+// ✅ API 路由放前面
 app.post('/pm', (req, res) => {
   latestPM = req.body;
   if (latestPM && Object.keys(latestPM).length > 0) {
@@ -44,6 +41,13 @@ app.post('/pm', (req, res) => {
 
 app.get('/latest-pm', (req, res) => {
   res.json(latestPM);
+});
+
+// ✅ 靜態檔案路由放後面
+app.use(express.static(path.join(__dirname, 'frontend/dist')));
+
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'frontend/dist/index.html'));
 });
 
 if (isLocal) {
